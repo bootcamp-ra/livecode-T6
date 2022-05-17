@@ -1,0 +1,395 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap');
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #FAFAFA;
+}
+
+h4 {
+    font-size: 14px;
+}
+
+span {
+    font-weight: 300;
+}
+
+strong {
+    font-weight: 500;
+}
+
+ion-icon {
+    cursor: pointer;
+}
+
+.container {
+    display: flex;
+    margin: 0 auto;
+    width: 935px;
+}
+
+.container-principal {
+    display: flex;
+    flex-direction: column;
+    max-width: 614px;
+    width: 614px;
+    
+}
+.feed {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 64px;
+}
+
+ion-icon[name="heart"] {
+    color: red;
+}
+
+
+.post-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding: 0 18px;
+}
+.post-profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.profile {
+    height: 32px;
+    border-radius: 50%;
+    margin: 0 10px;
+}
+
+.post {
+    height: 749px;
+    border: 1px solid #DBDBDB;
+    margin-bottom: 64px;
+}
+
+.post:last-child {
+    margin-bottom: 0px;
+}
+
+.post-media > img, video {
+    object-fit: cover;
+    width: 612px;
+    height: 612px;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.post-actions ion-icon {
+    font-size: 20px;
+    margin: 8px 4px;
+}
+
+.post-liked {
+    margin: 4px 4px;
+    display: flex;
+    align-items: center;
+}
+
+.post-liked > img {
+    height: 20px;
+    
+}
+
+.storys {
+    border: 1px solid #DBDBDB;
+    margin-top: 88px;
+    display: flex;
+    overflow: hidden;
+    padding: 10px 8px;
+    position: relative;
+}
+
+.storys > div {
+    background-image: url('./images/stories_background.jpg');
+    background-size: cover;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.separador {
+    width: 1px;
+    height: 22px;
+    background-color: #DBDBDB;
+    margin: 0 10px;
+  }
+
+.storys img {
+    width: 56px;
+    height: auto;
+}
+
+.storys > ion-icon {
+    width: 24px;
+    height: 24px;
+    background: #FFF;
+    border-radius: 50%;
+    box-shadow: 3px 3px 10px 0 rgba(0,0,0,0.3);
+    position: absolute;
+    top: 25px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.topo {
+    background-color: #FFFFFF;
+    height: 54px;
+    border: 1px solid #DBDBDB;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.topo-mobile {
+    display: none;
+}
+
+.topo-container {
+    width: 935px;
+    margin: 0 auto;
+    height: 54px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-container ion-icon {
+    font-size: 20px; 
+}
+
+.logo {
+    height: 29px;
+    margin: 0 10px;
+}
+
+.topo input {
+    background: #FAFAFA;
+    border: 1px solid #DBDBDB;
+    border-radius: 3px;
+    width: 215px;
+    height: 28px;
+    text-align: center;
+}
+
+.botoes-topo ion-icon {
+    font-size: 20px;
+    margin: 0 5px;
+}
+
+.container-secundario {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar {
+    width: 293px;
+    height: 300px;
+    background: #FAFAFA;
+    position: fixed;
+    top: 88px;
+    margin: 0 20px;
+}
+
+.sidebar > .usuario {
+    display: flex;
+    align-items: center;
+  }
+  
+  .sidebar > .usuario img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+  }
+  
+  .sidebar > .usuario .texto {
+    display: flex;
+    flex-direction: column;
+    margin-left: 14px;
+    font-weight: 300;
+    color: #8E8E8E;
+  }
+  
+  .sidebar > .usuario .texto strong {
+    font-weight: 500;
+    color: #262626;
+  }
+  
+  .sidebar .sugestoes .titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0 14px;
+  }
+  
+  .sidebar .sugestoes .sugestao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    height: 31px;
+    margin-bottom: 16px;
+  }
+  
+  .sidebar .sugestoes .sugestao .usuario {
+    display: flex;
+  }
+  
+  .sidebar .sugestoes img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+  
+  .sidebar .sugestoes .seguir {
+    color: #139EF2;
+    font-weight: 600;
+  }
+  
+  .sidebar .sugestoes .sugestao .usuario .texto {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .sidebar .sugestoes .sugestao .usuario .texto :last-child {
+    color: #8E8E8E;
+    font-weight: 400;
+  }
+  
+  .links, .copyright {
+    font-size: 11px;
+    color: #C7C7C7;
+  } 
+  
+  .links {
+    margin-top: 40px;
+    cursor: pointer;
+  }
+  
+  .copyright {
+    margin-top: 18px;
+  }
+
+  .actions-mobile {
+      display: none;
+  }
+
+
+  @media (max-width: 935px) {
+    .container {
+        width: 100%;
+      }
+      .container-secundario {
+          display: none;
+      }
+
+      .container-principal {
+          width: 100%;
+          margin: 0 auto;
+      }
+
+      .topo {
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        padding: 0 10px;
+      }
+
+      .topo-container {
+          width: 100%;
+      }
+
+      .feed {
+        width: 100%;
+    }
+
+      .post-media > img {
+        object-fit: cover;
+        width: 100%;
+        height: 612px;
+    }
+    
+  }
+
+  @media (max-width: 614px) {
+      .topo {
+          display: none;
+      }
+
+
+      .topo-container {
+        width: 100%;
+      }
+      .container-principal {
+        width: 100%;
+        margin: 0 0;
+    }
+
+    .storys {
+        width: 100%;
+        border: none;
+        margin: 0 auto;
+    }
+
+    .storys > ion-icon {
+        display: none;
+    }
+
+    .feed {
+        width: 100%;
+        margin: 0;
+    }
+
+    .topo-mobile {
+        display: flex;
+        padding: 0 10px;
+    }
+
+    .actions-mobile {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        height: 54px;
+        background-color: white;
+        bottom: 0;
+        left: 0;
+    }
+
+    .actions-mobile > ion-icon {
+        font-size: 18px;
+    }
+
+    .post:last-child {
+        margin-bottom: 54px;
+    }
+
+  }
+
