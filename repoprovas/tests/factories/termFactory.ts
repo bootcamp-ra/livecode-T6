@@ -1,5 +1,3 @@
-import { faker } from '@faker-js/faker';
-
 import { prisma } from './../../src/database';
 
 export default async function createTerms() {

@@ -1,59 +1,87 @@
 import { faker } from '@faker-js/faker';
 import supertest from 'supertest';
-
-import { CreateTestData } from '../src/services/testService';
-import app from './../src/app';
-import { prisma } from './../src/database';
+import app from '../src/app';
+import { prisma } from '../src/database';
 import {
   createScenarioOneTeacherWithOneTest,
   createScenarioTwoTeachersWithTwoTestsEach,
-  deleteAllData
+  deleteAllData,
+  disconnectPrisma
 } from './factories/scenarioFactory';
 import { tokenFactory } from './factories/tokenFactory';
 import userFactory from './factories/userFactory';
 
 beforeEach(async () => {
-  await deleteAllData(); // deleta tudo
+  await deleteAllData();
 });
 
-const agent = supertest(app);
+const server = supertest(app);
 
-describe('user tests', () => {
-  it('should create user', async () => {
+describe('Testes com usuário', () => {
+  it('Testa POST /sing-up passando usuário válido', async () => {
     const user = {
       email: faker.internet.email(),
       password: faker.internet.password()
     };
 
-    await agent.post('/sign-up').send(user);
+    const result = await server.post('/sign-up').send(user);
 
-    // efeitos colaterais
-    const userCreated = await prisma.user.findFirst({
+    const createdUser = await prisma.user.findFirst({
       where: { email: user.email }
     });
 
-    expect(userCreated).not.toBeNull();
+    expect(result.status).toBe(201);
+    expect(createdUser).not.toBeNull();
   });
 
-  it('should login user', async () => {
+  it('Testa POST /sing-up passando usuário que já existe', async () => {
     const user = {
       email: faker.internet.email(),
       password: faker.internet.password()
     };
 
-    userFactory(user);
-    const response = await agent.post('/sign-in').send(user);
+    await userFactory(user);
+
+    const result = await server.post('/sign-up').send(user);
+
+    expect(result.status).toBe(409);
+  });
+
+  it('Testa POST /sign-in passando usuário válido', async () => {
+    const user = {
+      email: faker.internet.email(),
+      password: faker.internet.password()
+    };
+
+    await userFactory(user);
+
+    const response = await server.post('/sign-in').send(user);
+
     const { token } = response.body;
-    expect(token).not.toBeNull();
+
+    expect(token).not.toBeFalsy();
+  });
+
+  it('Testa POST /sign-in passando usuário inválido', async () => {
+    const user = {
+      email: faker.internet.email(),
+      password: faker.internet.password()
+    };
+
+    const response = await server.post('/sign-in').send(user);
+
+    const { token } = response.body;
+
+    expect(token).toBeFalsy();
   });
 });
 
-describe('tests about tests', () => {
-  it('should create test', async () => {
+describe('Testes com provas', () => {
+  it('Testa se cria um prova com sucesso', async () => {
     const { category, discipline, teacher } =
       await createScenarioOneTeacherWithOneTest();
 
-    const test: CreateTestData = {
+    const test = {
       name: faker.lorem.words(5),
       pdfUrl: faker.internet.url(),
       categoryId: category.id,
@@ -63,20 +91,19 @@ describe('tests about tests', () => {
 
     const token = await tokenFactory();
 
-    const response = await agent
+    const response = await server
       .post('/tests')
       .set('Authorization', `Bearer ${token}`)
       .send(test);
 
     expect(response.status).toBe(201);
-    //TODO: checar efeito colateral com o prisma
   });
 
-  it('should return tests by discipline', async () => {
+  it('Retorna as provas agrupadas por disciplina', async () => {
     await createScenarioOneTeacherWithOneTest();
     const token = await tokenFactory();
 
-    const response = await agent
+    const response = await server
       .get('/tests?groupBy=disciplines')
       .set('Authorization', `Bearer ${token}`);
 
@@ -84,10 +111,12 @@ describe('tests about tests', () => {
     expect(response.body.tests[0].disciplines.length).toEqual(1);
   });
 
-  it('should return tests by instructor', async () => {
+  it('Retorna as provas agrupadas por instrutor', async () => {
     const scenario = await createScenarioTwoTeachersWithTwoTestsEach();
+
     const token = await tokenFactory();
-    const response = await agent
+
+    const response = await server
       .get('/tests?groupBy=teachers')
       .set('Authorization', `Bearer ${token}`);
 
@@ -104,5 +133,5 @@ describe('tests about tests', () => {
 });
 
 afterAll(async () => {
-  await prisma.$disconnect();
+  await disconnectPrisma();
 });
